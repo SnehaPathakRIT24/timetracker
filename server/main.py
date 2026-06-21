@@ -33,7 +33,7 @@ from server.services.insights import generate_daily_insights
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://tracker:tracker@localhost:5432/timetracker")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:////home/user/timetracker/test.db")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
 engine = create_engine(DATABASE_URL)
@@ -130,7 +130,7 @@ def get_current_member(
     payload = decode_token(credentials.credentials)
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid token")
-    member = db.query(TeamMember).filter(TeamMember.id == payload.get("sub")).first()
+    member = db.query(TeamMember).filter(TeamMember.id == int(payload.get("sub"))).first()
     if not member:
         raise HTTPException(status_code=401, detail="User not found")
     return member
@@ -192,17 +192,16 @@ async def ingest_activity(
         })
         db_records.append(db_rec)
 
-    # Classify
-    if ANTHROPIC_API_KEY:
-        classified = classify_batch(records_for_ai, db, ANTHROPIC_API_KEY)
-        for item in classified:
-            rec_id = item["id"]
-            db_rec = next(r for r in db_records if r.id == rec_id)
-            try:
-                db_rec.category = CategoryEnum(item["category"])
-            except ValueError:
-                db_rec.category = CategoryEnum.unknown
-            db_rec.confidence = item.get("confidence", 0.0)
+    # Classify — rule engine always runs; Claude only if API key present
+    classified = classify_batch(records_for_ai, db, ANTHROPIC_API_KEY)
+    for item in classified:
+        rec_id = item["id"]
+        db_rec = next(r for r in db_records if r.id == rec_id)
+        try:
+            db_rec.category = CategoryEnum(item["category"])
+        except ValueError:
+            db_rec.category = CategoryEnum.unknown
+        db_rec.confidence = item.get("confidence", 0.0)
 
     db.commit()
 
