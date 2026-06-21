@@ -1,0 +1,154 @@
+# Classification rules — checked BEFORE AI (free and instant)
+# match_type: contains | startswith | exact | regex
+# field: window_title | app_name | url
+# priority: lower number = checked first
+
+rules:
+  # ── Be Rolling Media ─────────────────────────────────────────────────────────
+  - pattern: "premiere pro"
+    match_type: contains
+    field: app_name
+    category: "Be Rolling Media"
+    priority: 1
+
+  - pattern: "Adobe Premiere Pro"
+    match_type: contains
+    field: window_title
+    category: "Be Rolling Media"
+    priority: 1
+
+  - pattern: "DaVinci Resolve"
+    match_type: contains
+    field: app_name
+    category: "Be Rolling Media"
+    priority: 1
+
+  - pattern: "After Effects"
+    match_type: contains
+    field: app_name
+    category: "Be Rolling Media"
+    priority: 1
+
+  - pattern: "CapCut"
+    match_type: contains
+    field: app_name
+    category: "Be Rolling Media"
+    priority: 1
+
+  - pattern: "berolling"
+    match_type: contains
+    field: window_title
+    category: "Be Rolling Media"
+    priority: 2
+
+  - pattern: "be rolling"
+    match_type: contains
+    field: window_title
+    category: "Be Rolling Media"
+    priority: 2
+
+  # ── Next Level ────────────────────────────────────────────────────────────────
+  - pattern: "next level"
+    match_type: contains
+    field: window_title
+    category: "Next Level"
+    priority: 2
+
+  - pattern: "nextlevel"
+    match_type: contains
+    field: window_title
+    category: "Next Level"
+    priority: 2
+
+  - pattern: "nextlevel"
+    match_type: contains
+    field: url
+    category: "Next Level"
+    priority: 2
+
+  # ── Outgrow Media ─────────────────────────────────────────────────────────────
+  - pattern: "outgrow"
+    match_type: contains
+    field: window_title
+    category: "Outgrow Media"
+    priority: 2
+
+  - pattern: "outgrow"
+    match_type: contains
+    field: url
+    category: "Outgrow Media"
+    priority: 2
+
+  # ── Admin ─────────────────────────────────────────────────────────────────────
+  - pattern: "Slack"
+    match_type: exact
+    field: app_name
+    category: "Admin"
+    priority: 10
+
+  - pattern: "zoom.us"
+    match_type: contains
+    field: url
+    category: "Admin"
+    priority: 10
+
+  - pattern: "Microsoft Teams"
+    match_type: contains
+    field: app_name
+    category: "Admin"
+    priority: 10
+
+  - pattern: "Calendar"
+    match_type: contains
+    field: app_name
+    category: "Admin"
+    priority: 10
+
+  - pattern: "mail.google.com"
+    match_type: contains
+    field: url
+    category: "Admin"
+    priority: 10
+
+  - pattern: "notion.so"
+    match_type: contains
+    field: url
+    category: "Admin"
+    priority: 10
+
+  - pattern: "trello.com"
+    match_type: contains
+    field: url
+    category: "Admin"
+    priority: 10
+
+  # ── Personal ──────────────────────────────────────────────────────────────────
+  - pattern: "youtube.com"
+    match_type: contains
+    field: url
+    category: "Personal"
+    priority: 20
+
+  - pattern: "netflix.com"
+    match_type: contains
+    field: url
+    category: "Personal"
+    priority: 20
+
+  - pattern: "instagram.com"
+    match_type: contains
+    field: url
+    category: "Personal"
+    priority: 20
+
+  - pattern: "twitter.com"
+    match_type: contains
+    field: url
+    category: "Personal"
+    priority: 20
+
+  - pattern: "x.com"
+    match_type: contains
+    field: url
+    category: "Personal"
+    priority: 20
